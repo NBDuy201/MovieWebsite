@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: "DM Sans", sans-serif;
+    @apply bg-slate-900 px-5;
+  }
+}
+
+@layer components {
+  .page-container {
+    @apply max-w-[1280px] mx-auto;
+  }
+
+  .banner .swiper {
+    @apply h-full;
+  }
+
+  .pagination {
+    .selected {
+      @apply text-white bg-primary rounded-full w-6 h-6 flex justify-center items-center;
+    }
+  }
+}
