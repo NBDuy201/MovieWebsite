@@ -1,3 +1,6 @@
+import useSWR from "swr";
+import axios from "axios";
+
 export const fetcher = (...args) => fetch(...args).then((res) => res.json());
 export const apiKey = "607dd9711e27d5eec5db5fac9e8e2414";
 
@@ -9,7 +12,6 @@ export const listType = {
 };
 
 export const tmdbApi = {
-  // https://api.themoviedb.org/3/movie/upcoming?api_key=607dd9711e27d5eec5db5fac9e8e2414
   getMovieList: (type, page = 1) =>
     `https://api.themoviedb.org/3/movie/${type}?api_key=${apiKey}&page=${page}`,
   getMovieDetail: (movieId) =>
@@ -26,4 +28,27 @@ export const tmdbApi = {
     `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${keyword}&page=${page}`,
   getImage: (poster_path) =>
     `https://image.tmdb.org/t/p/original/${poster_path}`,
+  getGenreName: (genreId) => {
+    if (genreList) {
+      return genreList[genreId.toString()];
+    } else {
+      return undefined;
+    }
+  },
 };
+
+const fetchGenreList = async () => {
+  try {
+    const response = await axios.get(tmdbApi.getGenreList());
+    const genres = response?.data?.genres || [];
+    var mapped = genres.map((item) => ({ [item.id]: item.name }));
+    const genreList = Object.assign({}, ...mapped);
+    console.log("run");
+
+    return genreList;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const genreList = await fetchGenreList();

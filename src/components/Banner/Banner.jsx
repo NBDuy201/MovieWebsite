@@ -30,7 +30,7 @@ const Banner = () => {
 };
 
 const BannerItem = ({ data }) => {
-  const { title, poster_path } = data;
+  const { genre_ids, title, poster_path } = data;
   return (
     <div className="bg-white w-full h-full rounded-lg relative">
       <div
@@ -48,8 +48,12 @@ const BannerItem = ({ data }) => {
         <h2 className="text-4xl font-semibold mb-4">{title}</h2>
         {/* Genre */}
         <div className="flex items-center justify-start gap-x-5 mb-8">
-          <span className="border p-2">Adventure</span>
-          <span className="border p-2">Adventure</span>
+          {genre_ids &&
+            genre_ids.map((item, index) => (
+              <span key={index} className="border p-2">
+                {tmdbApi.getGenreName(item)}
+              </span>
+            ))}
           <span className="border p-2">Adventure</span>
         </div>
         {/* Watch now */}

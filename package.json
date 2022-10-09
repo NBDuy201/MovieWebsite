@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.1.2",
     "eslint-plugin-only-warn": "^1.0.3",
     "node-sass": "^7.0.3",
     "prop-types": "^15.8.1",
