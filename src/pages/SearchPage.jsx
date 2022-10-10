@@ -1,9 +1,12 @@
 import React, { Fragment } from "react";
-import MovieItem from "./../components/movie/MovieItem";
+import MovieItem, {
+  MovieItemLoadingSkeleton,
+} from "./../components/movie/MovieItem";
 import { fetcher, listType, tmdbApi } from "./../config/config";
 import useSWR from "swr";
 import ReactPaginate from "react-paginate";
 import Button from "../components/button/Button";
+import LoadingSkeleton from "./../components/LoadingSkeleton/LoadingSkeleton";
 
 const itemsPerPage = 20;
 
@@ -80,10 +83,13 @@ const SearchPage = () => {
       {/* Search results */}
       <section className="page-container mb-10">
         {loading ? (
-          <div
-            className="w-10 h-10 rounded-full border-4 border-primary 
+          <>
+            {/* <div
+              className="w-10 h-10 rounded-full border-4 border-primary 
               border-t-transparent animate-spin mx-auto"
-          ></div>
+            ></div> */}
+            <SearchPageSkeleton></SearchPageSkeleton>
+          </>
         ) : (
           <>
             <h2 className="capitalize text-white font-bold text-2xl mb-3">
@@ -97,21 +103,40 @@ const SearchPage = () => {
                   <MovieItem key={item.id} data={item}></MovieItem>
                 ))}
             </div>
+            {/* Paging */}
+            <div className="page-container mt-10 text-white mb-5">
+              <ReactPaginate
+                breakLabel="..."
+                nextLabel="next >"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={pageCount}
+                previousLabel="< previous"
+                renderOnZeroPageCount={null}
+                className="pagination flex items-center justify-center gap-x-5"
+              />
+            </div>
           </>
         )}
       </section>
+    </Fragment>
+  );
+};
+
+const SearchPageSkeleton = () => {
+  return (
+    <Fragment>
+      <LoadingSkeleton className="w-[15%] h-[20px] mb-3"></LoadingSkeleton>
+      {/* Movie list */}
+      <div className="grid grid-cols-4 gap-10">
+        <MovieItemLoadingSkeleton></MovieItemLoadingSkeleton>
+        <MovieItemLoadingSkeleton></MovieItemLoadingSkeleton>
+        <MovieItemLoadingSkeleton></MovieItemLoadingSkeleton>
+        <MovieItemLoadingSkeleton></MovieItemLoadingSkeleton>
+      </div>
       {/* Paging */}
-      <div className="page-container mt-10 text-white mb-5">
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel="next >"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
-          pageCount={pageCount}
-          previousLabel="< previous"
-          renderOnZeroPageCount={null}
-          className="pagination flex items-center justify-center gap-x-5"
-        />
+      <div className="page-container mt-10 text-white mb-5 flex justify-center">
+        <LoadingSkeleton className="w-[40%] h-[15px] rounded-lg"></LoadingSkeleton>
       </div>
     </Fragment>
   );
