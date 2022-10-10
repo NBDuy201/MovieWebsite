@@ -43,9 +43,6 @@ const SearchPage = () => {
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % data.total_results;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
     setItemOffset(newOffset);
     setNextPage(event.selected + 1);
   };

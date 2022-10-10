@@ -1,4 +1,3 @@
-import useSWR from "swr";
 import axios from "axios";
 
 export const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -43,7 +42,6 @@ const fetchGenreList = async () => {
     const genres = response?.data?.genres || [];
     var mapped = genres.map((item) => ({ [item.id]: item.name }));
     const genreList = Object.assign({}, ...mapped);
-    console.log("run");
 
     return genreList;
   } catch (error) {

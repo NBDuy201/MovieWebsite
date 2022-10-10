@@ -62,7 +62,7 @@ const CastList = ({ movieId }) => {
 
   return (
     <div className="w-full mb-5">
-      <h1 className="text-white text-4xl mb-5 flex justify-center">Cast</h1>
+      <h1 className="text-white text-4xl mb-5 flex justify-center">Casts</h1>
       <div className="grid grid-cols-4 gap-x-10">
         {cast.slice(0, 4).map((item) => (
           <div key={item.id} className="cast-item text-white text-center">
@@ -82,21 +82,23 @@ const CastList = ({ movieId }) => {
 const MovieVideo = ({ movieId }) => {
   const { data, error } = useSWR(tmdbApi.getMovieVideo(movieId), fetcher);
   if (!data) return null;
-  console.log("🚀 ~ file: DetailPage.jsx ~ line 92 ~ movieVideo ~ data", data);
   const trailerList = data.results;
   return (
-    <div className="mb-5 flex flex-col gap-y-5">
-      {trailerList.slice(0, 2).map((item) => (
-        <div key={item.id} className="w-full aspect-video">
-          <iframe
-            src={`https://www.youtube.com/embed/${item.key}`}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="w-full h-full object-fill"
-          ></iframe>
-        </div>
-      ))}
+    <div className="">
+      <h1 className="text-white text-4xl mb-5 flex justify-center">Trailers</h1>
+      <div className="mb-5 items-center flex flex-col justify-center gap-y-5">
+        {trailerList.slice(0, 3).map((item) => (
+          <div key={item.id} className="w-[80%] aspect-video rounded-lg">
+            <iframe
+              src={`https://www.youtube.com/embed/${item.key}`}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full object-fill rounded-lg"
+            ></iframe>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
