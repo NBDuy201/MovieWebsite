@@ -1,12 +1,8 @@
 import React, { Fragment } from "react";
+import { tmdbApi } from "../config/config";
 import Banner from "./../components/Banner/Banner";
 import MovieList from "./../components/movie/MovieList";
-
-const listType = {
-  NOW_PLAYING: "now_playing",
-  TOP_RATED: "top_rated",
-  Trending: "popular",
-};
+import { listType } from "./../config/config";
 
 const HomePage = () => {
   return (
@@ -16,15 +12,15 @@ const HomePage = () => {
       {/* Movie list */}
       <MovieList
         title="New Releases"
-        api={`https://api.themoviedb.org/3/movie/${listType.NOW_PLAYING}?api_key=607dd9711e27d5eec5db5fac9e8e2414`}
+        api={tmdbApi.getMovieList(listType.NOW_PLAYING)}
       ></MovieList>
       <MovieList
         title="Top Rated"
-        api={`https://api.themoviedb.org/3/movie/${listType.TOP_RATED}?api_key=607dd9711e27d5eec5db5fac9e8e2414`}
+        api={tmdbApi.getMovieList(listType.TOP_RATED)}
       ></MovieList>
       <MovieList
         title="Trending"
-        api={`https://api.themoviedb.org/3/movie/${listType.Trending}?api_key=607dd9711e27d5eec5db5fac9e8e2414`}
+        api={tmdbApi.getMovieList(listType.TRENDING)}
       ></MovieList>
     </Fragment>
   );

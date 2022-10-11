@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../button/Button";
 import PropTypes from "prop-types";
 import LoadingSkeleton from "./../LoadingSkeleton/LoadingSkeleton";
+import { tmdbApi } from "../../config/config";
 
 const MovieItem = ({ data }) => {
   const { title, vote_average, release_date, poster_path, id } = data;
@@ -11,7 +12,7 @@ const MovieItem = ({ data }) => {
   return (
     <div className="movie-item rounded-md bg-slate-800 p-4 text-white select-none">
       <img
-        src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+        src={tmdbApi.getImage(poster_path, "w500")}
         alt=""
         className="w-full h-[300px] object-cover rounded-md mb-4"
       />
