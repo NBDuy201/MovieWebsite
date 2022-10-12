@@ -7,6 +7,7 @@ import useSWR from "swr";
 import ReactPaginate from "react-paginate";
 import Button from "../components/button/Button";
 import LoadingSkeleton from "./../components/LoadingSkeleton/LoadingSkeleton";
+import { v4 } from "uuid";
 
 const itemsPerPage = 20;
 
@@ -88,7 +89,9 @@ const SearchPage = () => {
               className="w-10 h-10 rounded-full border-4 border-primary 
               border-t-transparent animate-spin mx-auto"
             ></div> */}
-            <SearchPageSkeleton></SearchPageSkeleton>
+            {new Array(itemsPerPage).fill(0).map(() => (
+              <SearchPageSkeleton key={v4()}></SearchPageSkeleton>
+            ))}
           </>
         ) : (
           <>

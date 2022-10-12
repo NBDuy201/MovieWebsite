@@ -36,17 +36,20 @@ export const tmdbApi = {
   },
 };
 
-const fetchGenreList = async () => {
+export const fetchGenreList = async () => {
   try {
     const response = await axios.get(tmdbApi.getGenreList());
     const genres = response?.data?.genres || [];
-    var mapped = genres.map((item) => ({ [item.id]: item.name }));
-    const genreList = Object.assign({}, ...mapped);
 
-    return genreList;
+    return genres;
   } catch (error) {
     console.error(error);
   }
 };
 
-const genreList = await fetchGenreList();
+const mapGenreList = (genreList) => {
+  var mapped = genreList.map((item) => ({ [item.id]: item.name }));
+  return Object.assign({}, ...mapped);
+};
+
+const genreList = mapGenreList(await fetchGenreList());
