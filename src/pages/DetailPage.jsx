@@ -27,7 +27,7 @@ const DetailPage = () => {
         <img
           src={`${tmdbApi.getImage(poster_path)}`}
           alt=""
-          className="w-full h-full object-cover rounded-lg"
+          className="w-full h-full object-scale-down rounded-lg"
         />
       </div>
       {/* Title */}

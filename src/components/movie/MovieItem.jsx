@@ -14,7 +14,7 @@ const MovieItem = ({ data }) => {
       <img
         src={tmdbApi.getImage(poster_path, "w500")}
         alt=""
-        className="w-full h-[300px] object-cover rounded-md mb-4"
+        className="w-full h-[300px] object-scaledown rounded-md mb-4"
       />
       <h3 className="text-xl truncate">{title}</h3>
       <div className="flex justify-between text-gray-600 mb-5">

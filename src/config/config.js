@@ -48,6 +48,8 @@ export const fetchGenreList = async () => {
 };
 
 const mapGenreList = (genreList) => {
+  if (!genreList) return {};
+  console.log("run");
   var mapped = genreList.map((item) => ({ [item.id]: item.name }));
   return Object.assign({}, ...mapped);
 };

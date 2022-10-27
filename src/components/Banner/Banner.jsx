@@ -54,7 +54,6 @@ const BannerItem = ({ data }) => {
                 {tmdbApi.getGenreName(item)}
               </span>
             ))}
-          <span className="border p-2">Adventure</span>
         </div>
         {/* Watch now */}
         <Button className="p-4 font-medium">Watch now</Button>
