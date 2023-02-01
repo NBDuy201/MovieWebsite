@@ -9,10 +9,7 @@ import { listType } from "./../../config/config";
 
 const Banner = () => {
   // API
-  const { data, error } = useSWR(
-    tmdbApi.getMovieList(listType.UPCONGMING),
-    fetcher
-  );
+  const { data } = useSWR(tmdbApi.getMovieList(listType.UPCONGMING), fetcher);
   const movies = data?.results || [];
 
   return (

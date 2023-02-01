@@ -101,10 +101,11 @@ const SearchPage = () => {
                 : "There is no film matches..."}
             </h2>
             <div className="grid grid-cols-4 gap-10">
-              {movies.length > 0 &&
-                movies.map((item) => (
-                  <MovieItem key={item.id} data={item}></MovieItem>
-                ))}
+              {movies.length > 0
+                ? movies.map((item) => (
+                    <MovieItem key={item.id} data={item}></MovieItem>
+                  ))
+                : null}
             </div>
             {/* Paging */}
             <div className="page-container mt-10 text-white mb-5">

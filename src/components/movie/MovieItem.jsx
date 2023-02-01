@@ -12,9 +12,14 @@ const MovieItem = ({ data }) => {
   return (
     <div className="movie-item rounded-md bg-slate-800 p-4 text-white select-none">
       <img
-        src={tmdbApi.getImage(poster_path, "w500")}
-        alt=""
-        className="w-full h-[300px] object-scaledown rounded-md mb-4"
+        src={
+          tmdbApi.getImage(poster_path, "w500") ||
+          "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png"
+        }
+        alt="no image"
+        className={`w-full h-[300px] ${
+          poster_path ? "object-scaledown" : "object-cover"
+        } rounded-md mb-4`}
       />
       <h3 className="text-xl truncate">{title}</h3>
       <div className="flex justify-between text-gray-600 mb-5">

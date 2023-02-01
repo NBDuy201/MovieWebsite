@@ -25,8 +25,13 @@ export const tmdbApi = {
     `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}`,
   getSearch: (keyword, page = 1) =>
     `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${keyword}&page=${page}`,
-  getImage: (poster_path, size = "original") =>
-    `https://image.tmdb.org/t/p/${size}/${poster_path}`,
+  getImage: (poster_path, size = "original") => {
+    if (poster_path) {
+      return `https://image.tmdb.org/t/p/${size}${poster_path}`;
+    } else {
+      return null;
+    }
+  },
   getGenreName: (genreId) => {
     if (genreList) {
       return genreList[genreId.toString()];
@@ -49,7 +54,6 @@ export const fetchGenreList = async () => {
 
 const mapGenreList = (genreList) => {
   if (!genreList) return {};
-  console.log("run");
   var mapped = genreList.map((item) => ({ [item.id]: item.name }));
   return Object.assign({}, ...mapped);
 };
