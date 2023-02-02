@@ -1,10 +1,7 @@
 import React, { Fragment, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import BasicLayout from "./layout/BasicLayout";
-// import HomePage from "./pages/HomePage";
-// import MoviesPage from "./pages/MoviesPage";
-// import DetailPage from "./pages/DetailPage";
-// import SearchPage from "./pages/SearchPage";
+import { AuthProvider } from "./context/auth-context";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const MoviesPage = lazy(() => import("./pages/MoviesPage"));
@@ -13,7 +10,7 @@ const SearchPage = lazy(() => import("./pages/SearchPage"));
 
 function App() {
   return (
-    <Fragment>
+    <AuthProvider>
       <Suspense fallback={<></>}>
         <Routes>
           {/* Header */}
@@ -30,7 +27,7 @@ function App() {
           {/* Footer */}
         </Routes>
       </Suspense>
-    </Fragment>
+    </AuthProvider>
   );
 }
 
