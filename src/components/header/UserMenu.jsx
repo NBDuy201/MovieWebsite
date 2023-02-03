@@ -9,12 +9,15 @@ import {
 } from "@mui/material";
 import useMenu from "./../../hooks/useMenu";
 import Button from "./../button/Button";
+import { useNavigate } from "react-router-dom";
+import { authRoutes } from "../../common/page-routes";
 
 const UserMenu = () => {
   const { anchorEl, handleCloseMenu, handleOpenMenu, open } = useMenu();
   const settings = [{ text: "Logout", onClick: handleLogout }];
 
   const [isLogin, setIslogin] = React.useState(false);
+  const navigate = useNavigate();
 
   function handleLogout() {
     console.log("Logout");
@@ -59,7 +62,11 @@ const UserMenu = () => {
       </>
     );
   } else {
-    return <Button className="p-2">Login</Button>;
+    return (
+      <Button className="p-2" onClick={() => navigate(authRoutes.LOGIN)}>
+        Login
+      </Button>
+    );
   }
 };
 

@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
 import MovieItem, {
   MovieItemLoadingSkeleton,
-} from "./../components/movie/MovieItem";
-import { fetcher, listType, tmdbApi } from "./../config/config";
+} from "../../components/movie/MovieItem";
+import { fetcher, listType, tmdbApi } from "../../config/config";
 import useSWR from "swr";
 import ReactPaginate from "react-paginate";
-import Button from "../components/button/Button";
-import LoadingSkeleton from "./../components/LoadingSkeleton/LoadingSkeleton";
+import Button from "../../components/button/Button";
+import LoadingSkeleton from "../../components/LoadingSkeleton/LoadingSkeleton";
 import { v4 } from "uuid";
 
 const itemsPerPage = 20;

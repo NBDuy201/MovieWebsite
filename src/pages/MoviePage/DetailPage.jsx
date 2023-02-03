@@ -2,7 +2,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import useSWR from "swr";
-import { fetcher, tmdbApi } from "../config/config";
+import { fetcher, tmdbApi } from "../../config/config";
 
 const DetailPage = () => {
   const { movieId } = useParams();

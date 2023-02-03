@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import { tmdbApi } from "../config/config";
-import Banner from "./../components/Banner/Banner";
-import MovieList from "./../components/movie/MovieList";
-import { listType } from "./../config/config";
+import { tmdbApi } from "../../config/config";
+import { listType } from "../../config/config";
+import Banner from "./../../components/Banner/Banner";
+import MovieList from "./../../components/movie/MovieList";
 
 const HomePage = () => {
   return (

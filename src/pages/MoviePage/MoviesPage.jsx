@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
-import MovieList from "./../components/movie/MovieList";
-import { fetchGenreList, tmdbApi } from "../config/config";
+import MovieList from "../../components/movie/MovieList";
+import { fetchGenreList, tmdbApi } from "../../config/config";
 
 const sectionPerLoad = 2;
 const genre = await fetchGenreList();
