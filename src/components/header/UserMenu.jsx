@@ -63,7 +63,10 @@ const UserMenu = () => {
     );
   } else {
     return (
-      <Button className="p-2" onClick={() => navigate(authRoutes.LOGIN)}>
+      <Button
+        className="p-2 pl-4 pr-4"
+        onClick={() => navigate(authRoutes.LOGIN)}
+      >
         Login
       </Button>
     );

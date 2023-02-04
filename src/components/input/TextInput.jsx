@@ -1,14 +1,54 @@
+/* eslint-disable react/prop-types */
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import React from "react";
+import { useController } from "react-hook-form";
 
-// eslint-disable-next-line react/prop-types
-const TextInput = ({ className, type = "text", name, ...props }) => {
+const TextInput = ({
+  className,
+  type = "text",
+  name,
+  control,
+  defaultValue = "",
+  hasIcon,
+  ...props
+}) => {
+  const { field } = useController({
+    control,
+    name,
+    defaultValue,
+  });
+
+  const [togglePassword, setTogglePassword] = React.useState(false);
+
   return (
-    <input
-      type={type}
-      name={name}
-      className={`rounded-md p-2 bg-transparent outline-none ${className}`}
-      {...props}
-    />
+    <div className="flex relative items-center">
+      <input
+        type={type === "password" && togglePassword ? "text" : type}
+        name={name}
+        className={`w-full rounded-md p-2 ${
+          hasIcon ? "pr-10" : ""
+        } bg-transparent outline-none ${className}`}
+        {...props}
+        {...field}
+      />
+      {hasIcon ? (
+        togglePassword ? (
+          <VisibilityOff
+            className="absolute right-2 cursor-pointer"
+            onClick={() => {
+              setTogglePassword(false);
+            }}
+          ></VisibilityOff>
+        ) : (
+          <Visibility
+            className="absolute right-2 cursor-pointer"
+            onClick={() => {
+              setTogglePassword(true);
+            }}
+          ></Visibility>
+        )
+      ) : null}
+    </div>
   );
 };
 
