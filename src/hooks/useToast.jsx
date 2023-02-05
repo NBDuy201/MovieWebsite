@@ -1,4 +1,4 @@
-import { ErrorRounded } from "@mui/icons-material";
+import { Close, ErrorRounded } from "@mui/icons-material";
 import React from "react";
 import { toast } from "react-toastify";
 
@@ -11,6 +11,7 @@ const useToast = (errors) => {
         delay: 0,
         className: "bg-secondary text-primary",
         icon: () => <ErrorRounded className="text-primary" />,
+        closeButton: () => <Close fontSize="small" className="text-white" />,
         progressClassName: "bg-primary",
       });
     }

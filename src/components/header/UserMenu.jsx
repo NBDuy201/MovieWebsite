@@ -11,19 +11,27 @@ import useMenu from "./../../hooks/useMenu";
 import Button from "./../button/Button";
 import { useNavigate } from "react-router-dom";
 import { authRoutes } from "../../common/page-routes";
+import { useAuth } from "../../context/auth-context";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase/firebase-config";
 
 const UserMenu = () => {
   const { anchorEl, handleCloseMenu, handleOpenMenu, open } = useMenu();
   const settings = [{ text: "Logout", onClick: handleLogout }];
 
-  const [isLogin, setIslogin] = React.useState(false);
   const navigate = useNavigate();
 
+  const { userInfo } = useAuth();
   function handleLogout() {
-    console.log("Logout");
+    try {
+      signOut(auth);
+      navigate(authRoutes.LOGIN);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  if (isLogin) {
+  if (userInfo) {
     return (
       <>
         <Tooltip title="Open settings">

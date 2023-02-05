@@ -33,19 +33,19 @@ const TextInput = ({
       />
       {hasIcon ? (
         togglePassword ? (
-          <VisibilityOff
+          <Visibility
             className="absolute right-2 cursor-pointer"
             onClick={() => {
               setTogglePassword(false);
             }}
-          ></VisibilityOff>
+          ></Visibility>
         ) : (
-          <Visibility
+          <VisibilityOff
             className="absolute right-2 cursor-pointer"
             onClick={() => {
               setTogglePassword(true);
             }}
-          ></Visibility>
+          ></VisibilityOff>
         )
       ) : null}
     </div>

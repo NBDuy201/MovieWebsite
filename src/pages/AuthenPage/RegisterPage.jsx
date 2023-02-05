@@ -10,6 +10,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../../utils/schema";
 import useToast from "./../../hooks/useToast";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db } from "../../firebase/firebase-config";
+import { toast } from "react-toastify";
+import { addDoc, collection } from "firebase/firestore";
+import { CheckCircle, Close } from "@mui/icons-material";
 
 const RegisterPage = () => {
   // Form
@@ -24,10 +29,31 @@ const RegisterPage = () => {
   // Handle login
   const handleRegister = async (data) => {
     console.log("🚀 ~ file: RegisterPage.jsx:25 ~ handleRegister ~ data", data);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 5000);
+
+    // Call api
+    await createUserWithEmailAndPassword(auth, data.email, data.pwd);
+
+    // Add to db
+    const colRef = collection(db, "users");
+    await addDoc(colRef, {
+      name: data.fullName,
+      email: data.email,
+      password: data.pwd,
+    });
+
+    // Update current user
+    await updateProfile(auth.currentUser, {
+      displayName: data.fullName,
+    });
+
+    // Success msg
+    toast.success("Register successfully", {
+      pauseOnHover: false,
+      delay: 0,
+      className: "bg-secondary text-white",
+      icon: () => <CheckCircle className="text-green-500" />,
+      closeButton: () => <Close fontSize="small" className="text-white" />,
+      progressClassName: "bg-green-500",
     });
   };
 

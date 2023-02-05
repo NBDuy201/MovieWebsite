@@ -2,14 +2,18 @@ import React from "react";
 import TextInput from "./../../components/input/TextInput";
 import Button from "./../../components/button/Button";
 import { Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import { authRoutes } from "../../common/page-routes";
+import { Link, useNavigate } from "react-router-dom";
+import { authRoutes, movieRoutes } from "../../common/page-routes";
 import FormContainer from "../../components/authen/FormContainer";
 import FormImage from "./../../components/authen/FormImage";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { loginSchema } from "../../utils/schema";
 import useToast from "./../../hooks/useToast";
+import { AuthErrorCodes, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/firebase-config";
+import { toast } from "react-toastify";
+import { Close, ErrorRounded } from "@mui/icons-material";
 
 const LoginPage = () => {
   // Form
@@ -22,13 +26,32 @@ const LoginPage = () => {
   });
 
   // Handle login
+  const navigate = useNavigate();
   const handleLogin = async (data) => {
     console.log("🚀 ~ file: LoginPage.jsx:26 ~ handleLogin ~ data", data);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 5000);
-    });
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.pwd);
+      navigate(movieRoutes.HOME);
+    } catch (error) {
+      console.log(error.code);
+      switch (error.code) {
+        case AuthErrorCodes.INVALID_PASSWORD:
+          toast.error("Incorrect password", {
+            pauseOnHover: false,
+            delay: 0,
+            className: "bg-secondary text-primary",
+            icon: () => <ErrorRounded className="text-primary" />,
+            closeButton: () => (
+              <Close fontSize="small" className="text-white" />
+            ),
+            progressClassName: "bg-primary",
+          });
+          break;
+
+        default:
+          break;
+      }
+    }
   };
 
   useToast(errors);
