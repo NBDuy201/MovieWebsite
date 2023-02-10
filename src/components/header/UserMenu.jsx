@@ -10,10 +10,10 @@ import {
 import useMenu from "./../../hooks/useMenu";
 import Button from "./../button/Button";
 import { useNavigate } from "react-router-dom";
-import { authRoutes } from "../../common/page-routes";
 import { useAuth } from "../../context/auth-context";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
+import { authPaths } from "~/routes/page-path";
 
 const UserMenu = () => {
   const { anchorEl, handleCloseMenu, handleOpenMenu, open } = useMenu();
@@ -25,7 +25,7 @@ const UserMenu = () => {
   function handleLogout() {
     try {
       signOut(auth);
-      navigate(authRoutes.LOGIN);
+      navigate(authPaths.LOGIN);
     } catch (error) {
       console.log(error);
     }
@@ -34,10 +34,15 @@ const UserMenu = () => {
   if (userInfo) {
     return (
       <>
-        <Tooltip title="Open settings">
-          <IconButton onClick={handleOpenMenu} sx={{ p: 0 }}>
-            <Avatar className="bg-primary" alt="Remy Sharp" src="" />
-          </IconButton>
+        <Tooltip title={userInfo.displayName} className="max-w-[100px]">
+          <div className="flex items-center gap-x-2">
+            <IconButton onClick={handleOpenMenu} sx={{ p: 0 }}>
+              <Avatar className="bg-primary" alt="Remy Sharp" src="" />
+            </IconButton>
+            <Typography className="truncate">
+              Hi, {userInfo.displayName}
+            </Typography>
+          </div>
         </Tooltip>
         <Menu
           sx={{ mt: "45px" }}
@@ -73,7 +78,7 @@ const UserMenu = () => {
     return (
       <Button
         className="p-2 pl-4 pr-4"
-        onClick={() => navigate(authRoutes.LOGIN)}
+        onClick={() => navigate(authPaths.LOGIN)}
       >
         Login
       </Button>

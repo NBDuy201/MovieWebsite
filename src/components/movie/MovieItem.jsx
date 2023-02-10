@@ -4,6 +4,7 @@ import Button from "../button/Button";
 import PropTypes from "prop-types";
 import LoadingSkeleton from "./../LoadingSkeleton/LoadingSkeleton";
 import { tmdbApi } from "../../config/config";
+import { moviePaths } from "~/routes/page-path";
 
 const MovieItem = ({ data }) => {
   const { title, vote_average, release_date, poster_path, id } = data;
@@ -12,10 +13,7 @@ const MovieItem = ({ data }) => {
   return (
     <div className="movie-item rounded-md bg-slate-800 p-4 text-white select-none">
       <img
-        src={
-          tmdbApi.getImage(poster_path, "w500") ||
-          "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png"
-        }
+        src={tmdbApi.getImage(poster_path, "w500") || "/notFound.png"}
         alt="no image"
         className={`w-full h-[300px] ${
           poster_path ? "object-scaledown" : "object-cover"
@@ -28,7 +26,7 @@ const MovieItem = ({ data }) => {
       </div>
       <Button
         className="w-full p-3 mt-auto"
-        onClick={() => navigate(`/movies/${id}`)}
+        onClick={() => navigate(`${moviePaths.MOVIE_LIST}/${id}`)}
       >
         Watch Now
       </Button>

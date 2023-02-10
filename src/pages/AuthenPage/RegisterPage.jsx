@@ -1,7 +1,6 @@
 import { Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import { authRoutes } from "../../common/page-routes";
 import FormContainer from "../../components/authen/FormContainer";
 import FormImage from "../../components/authen/FormImage";
 import Button from "../../components/button/Button";
@@ -15,6 +14,7 @@ import { auth, db } from "../../firebase/firebase-config";
 import { toast } from "react-toastify";
 import { addDoc, collection } from "firebase/firestore";
 import { CheckCircle, Close } from "@mui/icons-material";
+import { authPaths } from "~/routes/page-path";
 
 const RegisterPage = () => {
   // Form
@@ -105,7 +105,7 @@ const RegisterPage = () => {
             <Typography
               variant="caption"
               component={Link}
-              to={authRoutes.LOGIN}
+              to={authPaths.LOGIN}
               className="text-primary underline"
             >
               Login here

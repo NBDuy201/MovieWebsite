@@ -1,14 +1,13 @@
 import React from "react";
-import { Fragment } from "react";
 import Header from "./Header";
-import { Outlet } from "react-router-dom";
 
-const BasicLayout = () => {
+// eslint-disable-next-line react/prop-types
+const BasicLayout = ({ children }) => {
   return (
-    <Fragment>
+    <>
       <Header></Header>
-      <Outlet></Outlet>
-    </Fragment>
+      <div className="content">{children}</div>
+    </>
   );
 };
 

@@ -6,6 +6,8 @@ import { fetcher, tmdbApi } from "../../config/config";
 import Button from "./../button/Button";
 import { PropTypes } from "prop-types";
 import { listType } from "./../../config/config";
+import { useNavigate } from "react-router-dom";
+import { moviePaths } from "~/routes/page-path";
 
 const Banner = () => {
   // API
@@ -27,7 +29,9 @@ const Banner = () => {
 };
 
 const BannerItem = ({ data }) => {
-  const { genre_ids, title, poster_path } = data;
+  const { genre_ids, title, poster_path, id } = data;
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white w-full h-full rounded-lg relative">
       <div
@@ -53,7 +57,12 @@ const BannerItem = ({ data }) => {
             ))}
         </div>
         {/* Watch now */}
-        <Button className="p-4 font-medium">Watch now</Button>
+        <Button
+          onClick={() => navigate(`${moviePaths.MOVIE_LIST}/${id}`)}
+          className="p-4 font-medium"
+        >
+          Watch now
+        </Button>
       </div>
     </div>
   );

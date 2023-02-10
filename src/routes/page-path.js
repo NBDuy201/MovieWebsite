@@ -1,13 +1,13 @@
-const movieRoutes = {
+const moviePaths = {
   HOME: "/",
   MOVIE_LIST: "/movies",
   MOVIE_DETAIL: "/movies/:movieId",
   MOVIE_SEARCH: "/discover",
 };
 
-const authRoutes = {
+const authPaths = {
   LOGIN: "/login",
   REGISTER: "/register",
 };
 
-export { movieRoutes, authRoutes };
+export { moviePaths, authPaths };

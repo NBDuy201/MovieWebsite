@@ -3,7 +3,6 @@ import TextInput from "./../../components/input/TextInput";
 import Button from "./../../components/button/Button";
 import { Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { authRoutes, movieRoutes } from "../../common/page-routes";
 import FormContainer from "../../components/authen/FormContainer";
 import FormImage from "./../../components/authen/FormImage";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,6 +13,7 @@ import { AuthErrorCodes, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import { toast } from "react-toastify";
 import { Close, ErrorRounded } from "@mui/icons-material";
+import { authPaths, moviePaths } from "~/routes/page-path";
 
 const LoginPage = () => {
   // Form
@@ -31,7 +31,7 @@ const LoginPage = () => {
     console.log("🚀 ~ file: LoginPage.jsx:26 ~ handleLogin ~ data", data);
     try {
       await signInWithEmailAndPassword(auth, data.email, data.pwd);
-      navigate(movieRoutes.HOME);
+      navigate(moviePaths.HOME);
     } catch (error) {
       console.log(error.code);
       switch (error.code) {
@@ -85,7 +85,7 @@ const LoginPage = () => {
             <Typography
               variant="caption"
               component={Link}
-              to={authRoutes.REGISTER}
+              to={authPaths.REGISTER}
               className="text-primary underline"
             >
               Register here
