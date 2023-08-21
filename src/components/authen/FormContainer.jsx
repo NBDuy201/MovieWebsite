@@ -1,11 +1,11 @@
 import React from "react";
 
 // eslint-disable-next-line react/prop-types
-const FormContainer = ({ children, extendH }) => {
+const FormContainer = ({ children }) => {
   return (
     <div
       className={`bg-secondary flex items-center justify-center rounded-2xl px-8 py-6 page-container m-auto
-      text-white w-3/5 max-w-[800px] h-[500px]`}
+      text-white w-3/5 max-w-[800px] h-[600px]`}
     >
       {children}
     </div>

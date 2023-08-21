@@ -11,8 +11,6 @@ import { loginSchema } from "../../utils/schema";
 import useToast from "./../../hooks/useToast";
 import { AuthErrorCodes, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
-import { toast } from "react-toastify";
-import { Close, ErrorRounded } from "@mui/icons-material";
 import { authPaths, moviePaths } from "~/routes/page-path";
 import PageLogo from "~/components/logo/PageLogo";
 
@@ -26,6 +24,8 @@ const LoginPage = () => {
     resolver: yupResolver(loginSchema),
   });
 
+  const { showErrToast } = useToast(errors);
+
   // Handle login
   const navigate = useNavigate();
   const handleLogin = async (data) => {
@@ -37,16 +37,11 @@ const LoginPage = () => {
       console.log(error.code);
       switch (error.code) {
         case AuthErrorCodes.INVALID_PASSWORD:
-          toast.error("Incorrect password", {
-            pauseOnHover: false,
-            delay: 0,
-            className: "bg-secondary text-primary",
-            icon: () => <ErrorRounded className="text-primary" />,
-            closeButton: () => (
-              <Close fontSize="small" className="text-white" />
-            ),
-            progressClassName: "bg-primary",
-          });
+          showErrToast("Incorrect password");
+          break;
+
+        case AuthErrorCodes.USER_DELETED:
+          showErrToast("User doesn't exists");
           break;
 
         default:
@@ -54,8 +49,6 @@ const LoginPage = () => {
       }
     }
   };
-
-  useToast(errors);
 
   return (
     <FormContainer>
