@@ -4,17 +4,15 @@ import PageNav from "./../components/header/PageNav";
 
 const Header = () => {
   return (
-    <>
-      <header className="header text-white page-container flex">
-        <div className="flex py-10 text-xl gap-5 mx-auto">
-          <PageNav />
-        </div>
+    <header className="header text-white flex">
+      <div className="flex py-10 text-xl gap-5 mx-auto">
+        <PageNav />
+      </div>
 
-        <div className="flex self-center">
-          <UserMenu />
-        </div>
-      </header>
-    </>
+      <div className="flex self-center">
+        <UserMenu />
+      </div>
+    </header>
   );
 };
 

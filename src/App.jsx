@@ -1,12 +1,11 @@
 import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/auth-context";
-import BasicLayout from "./layout/BasicLayout";
 import { authRoutes, movieRoutes } from "./routes/page-routes";
 
 function listRoutes(routes) {
   return routes.map((route) => {
-    const Layout = BasicLayout;
+    const Layout = route.layout;
     const Page = route.component;
     return (
       <Route
