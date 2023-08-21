@@ -11,10 +11,9 @@ import { registerSchema } from "../../utils/schema";
 import useToast from "./../../hooks/useToast";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../../firebase/firebase-config";
-import { toast } from "react-toastify";
 import { addDoc, collection } from "firebase/firestore";
-import { CheckCircle, Close } from "@mui/icons-material";
 import { authPaths } from "~/routes/page-path";
+import PageLogo from "~/components/logo/PageLogo";
 
 const RegisterPage = () => {
   // Form
@@ -26,99 +25,96 @@ const RegisterPage = () => {
     resolver: yupResolver(registerSchema),
   });
 
+  const { showSuccessToast, showErrToast } = useToast(errors);
+
   // Handle login
   const handleRegister = async (data) => {
     console.log("🚀 ~ file: RegisterPage.jsx:25 ~ handleRegister ~ data", data);
 
-    // Call api
-    await createUserWithEmailAndPassword(auth, data.email, data.pwd);
+    try {
+      // Call api
+      await createUserWithEmailAndPassword(auth, data.email, data.pwd);
 
-    // Add to db
-    const colRef = collection(db, "users");
-    await addDoc(colRef, {
-      name: data.fullName,
-      email: data.email,
-      password: data.pwd,
-    });
+      // Add to db
+      const colRef = collection(db, "users");
+      await addDoc(colRef, {
+        name: data.fullName,
+        email: data.email,
+        password: data.pwd,
+      });
 
-    // Update current user
-    await updateProfile(auth.currentUser, {
-      displayName: data.fullName,
-    });
+      // Update current user
+      await updateProfile(auth.currentUser, {
+        displayName: data.fullName,
+      });
 
-    // Success msg
-    toast.success("Register successfully", {
-      pauseOnHover: false,
-      delay: 0,
-      className: "bg-secondary text-white",
-      icon: () => <CheckCircle className="text-green-500" />,
-      closeButton: () => <Close fontSize="small" className="text-white" />,
-      progressClassName: "bg-green-500",
-    });
+      // Success msg
+      showSuccessToast("Register successfully");
+    } catch (error) {
+      console.log(error);
+      showErrToast("Register failed. Please try again later.");
+    }
   };
 
-  useToast(errors);
-
   return (
-    <div className="h-[calc(100vh-108px)] flex">
-      <FormContainer extendH={true}>
-        {/* Form */}
-        <form
-          onSubmit={handleSubmit(handleRegister)}
-          className="w-1/2 pr-3 h-full flex flex-col gap-y-6 flex-1 justify-center"
-        >
-          <h2 className="font-bold text-6xl text-primary text-center">
-            Register
-          </h2>
-          <TextInput
-            type="text"
-            name="fullName"
-            className="outline-slate-500"
-            placeholder="Full name"
-            control={control}
-          />
-          <TextInput
-            type="email"
-            name="email"
-            className="outline-slate-500"
-            placeholder="Email"
-            control={control}
-          />
-          <TextInput
-            type="password"
-            name="pwd"
-            className="outline-slate-500"
-            placeholder="Password"
-            control={control}
-            hasIcon={true}
-          />
-          <TextInput
-            type="password"
-            name="cpwd"
-            className="outline-slate-500"
-            placeholder="Re-enter password"
-            control={control}
-            hasIcon={true}
-          />
-          <Typography variant="caption">
-            Already have an account ?{" "}
-            <Typography
-              variant="caption"
-              component={Link}
-              to={authPaths.LOGIN}
-              className="text-primary underline"
-            >
-              Login here
-            </Typography>
+    <FormContainer>
+      {/* Image */}
+      <FormImage />
+      {/* Form */}
+      <form
+        onSubmit={handleSubmit(handleRegister)}
+        className="w-1/2 pl-10 h-full flex flex-col gap-y-6 flex-1 justify-center"
+      >
+        <PageLogo wrapperClass={"mb-8"} />
+        <h2 className="font-bold text-5xl text-primary">Register</h2>
+        <TextInput
+          type="text"
+          name="fullName"
+          className="outline-slate-500"
+          placeholder="Full name"
+          control={control}
+        />
+        <TextInput
+          type="email"
+          name="email"
+          className="outline-slate-500"
+          placeholder="Email"
+          control={control}
+        />
+        <TextInput
+          type="password"
+          name="pwd"
+          className="outline-slate-500"
+          placeholder="Password"
+          control={control}
+          hasIcon={true}
+        />
+        <TextInput
+          type="password"
+          name="cpwd"
+          className="outline-slate-500"
+          placeholder="Re-enter password"
+          control={control}
+          hasIcon={true}
+        />
+
+        <Button type="submit" className="p-3" isLoading={isSubmitting}>
+          Register
+        </Button>
+
+        <Typography variant="caption" className="mt-8">
+          Already have an account?
+          <Typography
+            variant="caption"
+            component={Link}
+            to={authPaths.LOGIN}
+            className="text-primary underline ml-1"
+          >
+            Login here
           </Typography>
-          <Button type="submit" className="p-3" isLoading={isSubmitting}>
-            Register
-          </Button>
-        </form>
-        {/* Image */}
-        <FormImage />
-      </FormContainer>
-    </div>
+        </Typography>
+      </form>
+    </FormContainer>
   );
 };
 
