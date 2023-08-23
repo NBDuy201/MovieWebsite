@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+// Const
+$PRIMARY: #db2777;
+$SECONDARY: #1e293b;
+$SUBTITLE: #94a3b8;
+
 @layer base {
   body {
     font-family: "DM Sans", sans-serif;
@@ -41,5 +46,23 @@
 @keyframes shine {
   to {
     background-position-x: -200%;
+  }
+}
+
+// Scrollbar
+html {
+  &::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 50%;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $SUBTITLE;
+    border-radius: 5px;
+    &:hover {
+      background: rgba($color: $SUBTITLE, $alpha: 0.5);
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background: $SECONDARY;
   }
 }
