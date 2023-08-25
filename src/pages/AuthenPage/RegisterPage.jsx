@@ -9,9 +9,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../../utils/schema";
 import useToast from "./../../hooks/useToast";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  AuthErrorCodes,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { auth, db } from "../../firebase/firebase-config";
-import { addDoc, collection } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { authPaths } from "~/routes/page-path";
 import PageLogo from "~/components/logo/PageLogo";
 
@@ -33,14 +37,19 @@ const RegisterPage = () => {
 
     try {
       // Call api
-      await createUserWithEmailAndPassword(auth, data.email, data.pwd);
+      const resp = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.pwd
+      );
 
       // Add to db
-      const colRef = collection(db, "users");
-      await addDoc(colRef, {
+      const colRef = doc(db, "users", resp.user.uid);
+      await setDoc(colRef, {
         name: data.fullName,
         email: data.email,
         password: data.pwd,
+        favMovie: [],
       });
 
       // Update current user
@@ -52,7 +61,15 @@ const RegisterPage = () => {
       showSuccessToast("Register successfully");
     } catch (error) {
       console.log(error);
-      showErrToast("Register failed. Please try again later.");
+
+      switch (error.code) {
+        case AuthErrorCodes.EMAIL_EXISTS:
+          showErrToast("Email already registered");
+          break;
+        default:
+          showErrToast("Register failed. Please try again later.");
+          break;
+      }
     }
   };
 

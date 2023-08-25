@@ -12,6 +12,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import { authPaths } from "~/routes/page-path";
 import useClickOutside from "~/hooks/useClickOutSide";
+import Button from "../button/Button";
 
 const UserMenu = () => {
   const { userInfo } = useAuth();
@@ -46,7 +47,7 @@ const UserMenu = () => {
     },
   ];
 
-  if (userInfo)
+  if (userInfo) {
     return (
       <div ref={nodeRef} className="hidden sm:block">
         <div className="relative">
@@ -113,6 +114,16 @@ const UserMenu = () => {
         </div>
       </div>
     );
+  } else {
+    return (
+      <Button
+        className="p-2 pl-4 pr-4"
+        onClick={() => navigate(authPaths.LOGIN)}
+      >
+        Login
+      </Button>
+    );
+  }
 };
 
 export default UserMenu;

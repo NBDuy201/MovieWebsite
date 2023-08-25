@@ -5,13 +5,37 @@ import PropTypes from "prop-types";
 import LoadingSkeleton from "./../LoadingSkeleton/LoadingSkeleton";
 import { tmdbApi } from "../../config/config";
 import { moviePaths } from "~/routes/page-path";
+import { useAuth } from "~/context/auth-context";
+
+// MUI icon
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import StarIcon from "@mui/icons-material/Star";
+import { addFavMovie } from "~/utils/api-call/favorite-api";
 
 const MovieItem = ({ data }) => {
   const { title, vote_average, release_date, poster_path, id } = data;
   const navigate = useNavigate();
+  const { userInfo } = useAuth();
+
+  async function addFavorite() {
+    const movieId = id;
+
+    try {
+      await addFavMovie(movieId, userInfo.uid);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
-    <div className="movie-item rounded-md bg-slate-800 p-4 text-white select-none">
+    <div className="movie-item rounded-md bg-slate-800 p-4 text-white select-none relative">
+      <button className="absolute right-2 top-3" onClick={addFavorite}>
+        <BookmarkIcon className="text-secondary text-[70px] opacity-50 hover:opacity-100" />
+        <FavoriteBorderIcon className="absolute right-[22px] top-5 pointer-events-none" />
+        {/* <FavoriteIcon className="text-white absolute right-[22px] top-5 pointer-events-none" /> */}
+      </button>
       <img
         src={tmdbApi.getImage(poster_path, "w500") || "/notFound.png"}
         alt="no image"
@@ -20,9 +44,11 @@ const MovieItem = ({ data }) => {
         } rounded-md mb-4`}
       />
       <h3 className="text-xl truncate">{title}</h3>
-      <div className="flex justify-between text-gray-600 mb-5">
+      <div className="flex justify-between text-subtitle mb-5">
         <span>{new Date(release_date).getFullYear()}</span>
-        <span>{vote_average}</span>
+        <span className="flex items-center gap-x-1">
+          <StarIcon className="text-yellow-500 text-lg" /> {vote_average}
+        </span>
       </div>
       <Button
         className="w-full p-3 mt-auto"
