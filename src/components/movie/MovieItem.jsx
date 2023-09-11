@@ -19,27 +19,27 @@ const MovieItem = ({ data }) => {
   const navigate = useNavigate();
   const { userInfo, authInfo, getUserData } = useAuth();
 
-  async function addFavorite(movieId) {
+  async function addFavorite(movieData) {
     try {
-      await addFavMovie(movieId, authInfo.uid);
+      await addFavMovie(movieData, authInfo.uid);
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function removeFavorite(movieId) {
+  async function removeFavorite(movieData) {
     try {
-      await removeFavMovie(movieId, authInfo.uid);
+      await removeFavMovie(movieData, authInfo.uid);
     } catch (error) {
       console.log(error);
     }
   }
 
   function favBtnClick() {
-    const movieId = id;
-    userInfo?.favMovie?.includes(movieId)
-      ? removeFavorite(movieId)
-      : addFavorite(movieId);
+    const movieData = data;
+    userInfo?.favMovie?.find((item) => item.id === id)
+      ? removeFavorite(movieData)
+      : addFavorite(movieData);
     getUserData();
   }
 
@@ -47,7 +47,7 @@ const MovieItem = ({ data }) => {
     <div className="movie-item rounded-md bg-slate-800 p-4 text-white select-none relative">
       <button className="absolute right-2 top-3" onClick={favBtnClick}>
         <BookmarkIcon className="text-secondary text-[70px] opacity-50 hover:opacity-100" />
-        {userInfo?.favMovie?.includes(id) ? (
+        {userInfo?.favMovie?.find(item => item.id === id) ? (
           <FavoriteIcon className="text-white absolute right-[22px] top-5 pointer-events-none" />
         ) : (
           <FavoriteBorderIcon className="absolute right-[22px] top-5 pointer-events-none" />

@@ -8,6 +8,10 @@ const AuthContext = React.createContext();
 function AuthProvider(props) {
   const [authInfo, setAuthInfo] = React.useState();
   const [userInfo, setUserInfo] = React.useState();
+  // console.log(
+  //   "🚀 ~ file: auth-context.jsx:11 ~ AuthProvider ~ userInfo:",
+  //   userInfo
+  // );
   const [isLoading, setIsLoading] = React.useState(false);
   const value = {
     userInfo,

@@ -8,6 +8,7 @@ const Button = ({
   type = "button",
   children,
   isLoading = false,
+  icon = <></>,
   ...props
 }) => {
   return (
@@ -26,7 +27,10 @@ const Button = ({
           className="text-white flex m-auto"
         ></CircularProgress>
       ) : (
-        children
+        <>
+          {icon}
+          {children}
+        </>
       )}
     </button>
   );
@@ -38,6 +42,7 @@ Button.propTypes = {
   type: PropTypes.string,
   children: PropTypes.any,
   isLoading: PropTypes.bool,
+  icon: PropTypes.element,
   props: PropTypes.any,
 };
 

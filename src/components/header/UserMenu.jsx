@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth-context";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
-import { authPaths } from "~/routes/page-path";
+import { authPaths, moviePaths } from "~/routes/page-path";
 import useClickOutside from "~/hooks/useClickOutSide";
 import Button from "../button/Button";
 
@@ -35,7 +35,7 @@ const UserMenu = () => {
     //   icon: <PersonOutlineOutlinedIcon />,
     // },
     {
-      onClick: () => console.log("Favorite"),
+      onClick: () => navigate(moviePaths.FAV_MOVIES),
       text: "Favorite",
       icon: <FavoriteBorderIcon />,
     },

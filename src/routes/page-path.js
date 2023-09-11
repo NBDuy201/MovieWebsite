@@ -3,6 +3,7 @@ const moviePaths = {
   MOVIE_LIST: "/movies",
   MOVIE_DETAIL: "/movies/:movieId",
   MOVIE_SEARCH: "/discover",
+  FAV_MOVIES: "/favourite",
 };
 
 const authPaths = {
