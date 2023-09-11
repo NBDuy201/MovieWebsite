@@ -12,29 +12,46 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import StarIcon from "@mui/icons-material/Star";
-import { addFavMovie } from "~/utils/api-call/favorite-api";
+import { addFavMovie, removeFavMovie } from "~/utils/api-call/favorite-api";
 
 const MovieItem = ({ data }) => {
   const { title, vote_average, release_date, poster_path, id } = data;
   const navigate = useNavigate();
-  const { userInfo } = useAuth();
+  const { userInfo, authInfo, getUserData } = useAuth();
 
-  async function addFavorite() {
-    const movieId = id;
-
+  async function addFavorite(movieId) {
     try {
-      await addFavMovie(movieId, userInfo.uid);
+      await addFavMovie(movieId, authInfo.uid);
     } catch (error) {
       console.log(error);
     }
   }
 
+  async function removeFavorite(movieId) {
+    try {
+      await removeFavMovie(movieId, authInfo.uid);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function favBtnClick() {
+    const movieId = id;
+    userInfo?.favMovie?.includes(movieId)
+      ? removeFavorite(movieId)
+      : addFavorite(movieId);
+    getUserData();
+  }
+
   return (
     <div className="movie-item rounded-md bg-slate-800 p-4 text-white select-none relative">
-      <button className="absolute right-2 top-3" onClick={addFavorite}>
+      <button className="absolute right-2 top-3" onClick={favBtnClick}>
         <BookmarkIcon className="text-secondary text-[70px] opacity-50 hover:opacity-100" />
-        <FavoriteBorderIcon className="absolute right-[22px] top-5 pointer-events-none" />
-        {/* <FavoriteIcon className="text-white absolute right-[22px] top-5 pointer-events-none" /> */}
+        {userInfo?.favMovie?.includes(id) ? (
+          <FavoriteIcon className="text-white absolute right-[22px] top-5 pointer-events-none" />
+        ) : (
+          <FavoriteBorderIcon className="absolute right-[22px] top-5 pointer-events-none" />
+        )}
       </button>
       <img
         src={tmdbApi.getImage(poster_path, "w500") || "/notFound.png"}

@@ -51,14 +51,14 @@ const UserMenu = () => {
     return (
       <div ref={nodeRef} className="hidden sm:block">
         <div className="relative">
-          <Tooltip title={`${userInfo.displayName}`} placement="left">
+          <Tooltip title={`${userInfo.name}`} placement="left">
             <IconButton
               onClick={() => setShow((prv) => !prv)}
               className="user-nav !p-0 !border-none !rounded-full hover:!bg-none"
             >
               {/* Default & google avatar */}
               <Avatar
-                alt={userInfo.displayName}
+                alt={userInfo.name}
                 src={userInfo?.picture}
                 className="bg-primary"
               />
@@ -73,14 +73,12 @@ const UserMenu = () => {
                 {/* Account info */}
                 <div className="p-4 border-b flex gap-x-2 items-center">
                   <Avatar
-                    alt={userInfo.displayName}
+                    alt={userInfo.name}
                     src={userInfo?.picture}
                     className="bg-primary"
                   />
                   <div className="flex-1 overflow-hidden">
-                    <p className="font-semibold truncate">
-                      {userInfo.displayName}
-                    </p>
+                    <p className="font-semibold truncate">{userInfo.name}</p>
                     <p className="text-xs text-subtitle truncate">
                       {userInfo.email}
                     </p>
