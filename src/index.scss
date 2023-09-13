@@ -11,7 +11,17 @@ $SUBTITLE: #94a3b8;
 @layer base {
   body {
     font-family: "DM Sans", sans-serif;
-    @apply bg-slate-900 px-5;
+    @apply bg-slate-900 px-5 text-white;
+  }
+
+  h1 {
+    @apply text-3xl;
+  }
+  h2 {
+    @apply text-2xl;
+  }
+  h3 {
+    @apply text-xl;
   }
 }
 

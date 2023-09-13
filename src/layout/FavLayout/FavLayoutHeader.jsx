@@ -15,7 +15,7 @@ const FavLayoutHeader = () => {
           className="p-2 px-4"
           onClick={() => navigate(moviePaths.HOME)}
         >
-          Quay lại
+          Back
         </Button>
       </div>
 

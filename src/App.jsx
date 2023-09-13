@@ -7,10 +7,11 @@ function listRoutes(routes) {
   return routes.map((route) => {
     const Layout = route.layout;
     const Page = route.component;
+    const Path = typeof route.path === "function" ? route.path() : route.path;
     return (
       <Route
-        key={route.path}
-        path={route.path}
+        key={Path}
+        path={Path}
         element={
           <Layout>
             <Page />
