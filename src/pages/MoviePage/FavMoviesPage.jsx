@@ -1,28 +1,35 @@
 import React from "react";
 import { useAuth } from "~/context/auth-context";
+import useSortMovies from "~/hooks/useSortMovies";
+import ListHeader from "~/modules/FavMovies/ListHeader";
 import MovieCard from "~/modules/FavMovies/MovieCard";
 
 const FavMoviesPage = () => {
-  const { userInfo } = useAuth();
-  const favMovies = userInfo?.favMovie || [];
+  const { userInfo, isLoading } = useAuth();
+
+  const {
+    sortedMovies,
+    FILTER_VAL,
+    isAsc,
+    setIsAsc,
+    setFilter,
+    isLoading: isProccessing,
+  } = useSortMovies(userInfo?.favMovie);
 
   return (
     <div className="flex flex-col gap-y-6 mb-12">
-      <div className="bg-secondary rounded-lg">
-        <h1 className="p-4 border-b border-subtitle">Your favorite movies</h1>
-        <div className="p-4 flex justify-between items-center">
-          <div className="text-subtitle">{favMovies?.length || 0} titles</div>
-          <div className="w-1/4 flex gap-x-2 items-center">
-            <label className="text-subtitle">Sort by</label>
-            <span className="border px-4 py-1 rounded-lg flex-1">
-              List Order
-            </span>
-          </div>
-        </div>
-      </div>
-      {favMovies?.length > 0 ? (
+      <ListHeader
+        favMovies={sortedMovies}
+        FILTER_VAL={FILTER_VAL}
+        isAsc={isAsc}
+        setIsAsc={setIsAsc}
+        setFilter={setFilter}
+      />
+      {isLoading || isProccessing ? (
+        "Loading"
+      ) : sortedMovies?.length > 0 ? (
         <div className="grid grid-cols-2 gap-4">
-          {favMovies.map((item) => (
+          {sortedMovies.map((item) => (
             <MovieCard key={item.id} data={item} />
           ))}
         </div>

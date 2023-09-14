@@ -12,7 +12,7 @@ function AuthProvider(props) {
   //   "🚀 ~ file: auth-context.jsx:11 ~ AuthProvider ~ userInfo:",
   //   userInfo
   // );
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   const value = {
     userInfo,
     setUserInfo,
@@ -30,13 +30,13 @@ function AuthProvider(props) {
   }, []);
 
   async function getUserData() {
-    setIsLoading(true);
     if (authInfo?.uid) {
+      setIsLoading(true);
       const data = await getUserInfo(authInfo?.uid);
       console.log("run", userInfo?.uid);
       setUserInfo(data);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   React.useEffect(() => {
