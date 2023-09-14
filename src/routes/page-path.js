@@ -1,8 +1,10 @@
 const moviePaths = {
   HOME: "/",
   MOVIE_LIST: "/movies",
-  MOVIE_DETAIL: "/movies/:movieId",
+  MOVIE_DETAIL: (movieId) =>
+    movieId ? `/movies/${movieId}` : "/movies/:movieId",
   MOVIE_SEARCH: "/discover",
+  FAV_MOVIES: "/favourite",
 };
 
 const authPaths = {

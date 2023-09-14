@@ -1,6 +1,6 @@
 import React from "react";
-import UserMenu from "./../components/header/UserMenu";
-import PageNav from "./../components/header/PageNav";
+import UserMenu from "../../components/header/UserMenu";
+import PageNav from "../../components/header/PageNav";
 
 const Header = () => {
   return (
